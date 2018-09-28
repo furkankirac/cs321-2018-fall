@@ -8,11 +8,11 @@ struct Data
 };
 
 
-void printAgeInData(Data data)
+void printAgeInData(Data* data)
 {
-    printf("1) %d\n", data.age);
-    data.age = 50;
-    printf("2) %d\n", data.age);
+    printf("1) %d\n", data->age);
+    data->age = 50;
+    printf("2) %d\n", data->age);
 }
 
 void printTitle()
@@ -21,7 +21,7 @@ void printTitle()
     Data d;
     d.age = 41;
     strcpy(d.name, "HELLO");
-    printAgeInData(d);
+    printAgeInData(&d);
 
     printf("3) %d\n", d.age);
 
