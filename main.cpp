@@ -7,14 +7,23 @@ struct Data
     int age;
 };
 
+
+void printAgeInData(Data data)
+{
+    printf("1) %d\n", data.age);
+    data.age = 50;
+    printf("2) %d\n", data.age);
+}
+
 void printTitle()
 {
     int k = 0;
     Data d;
-//    d.name[0] = 'A';
-//    d.name[1] = 0;
-
+    d.age = 41;
     strcpy(d.name, "HELLO");
+    printAgeInData(d);
+
+    printf("3) %d\n", d.age);
 
     printf("This is our first CS321 program :)\n");
     printf("[%s]\n", d.name);
