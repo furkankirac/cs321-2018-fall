@@ -39,8 +39,15 @@ void printTitle()
     printf("[%s]\n", d.name);
 }
 
+char letters[10] = {'C', 'S', '3', '2', '1'};
+
 int main(int argc, char* argv[])
 {
+    printf("'%c'\n", *(letters+2));
+    printf("'%c'\n", *(2+letters));
+    printf("'%c'\n", letters[2]);
+    printf("'%c'\n", 2[letters]);
+
     printTitle();
     printf("Number of arguments passed: %d\n", argc);
     for(int i=0; i<argc; ++i)
