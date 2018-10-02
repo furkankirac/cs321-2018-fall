@@ -15,17 +15,23 @@ struct Data
     char name[100];
     int age;
 
-    void printAge();
-    void printName();
+    void printAge() const;
+    void printName() const;
 };
 
 
-void Data::printAge()
+void printAgeInData(const Data& d)
 {
+    printf("Age: %d\n", d.age);
+}
+
+void Data::printAge() const
+{
+//    this->age = 20; // error because of const
     printf("Age: %d\n", this->age);
 }
 
-void Data::printName()
+void Data::printName() const
 {
     printf("Name: %s\n", this->name);
 }
@@ -40,6 +46,7 @@ void printTitle()
 
     d.printName();
     d.printAge();
+    printAgeInData(d);
 }
 
 
