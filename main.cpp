@@ -1,3 +1,12 @@
+// Pointer arithmetic, chars, []
+// heap: malloc/free
+// heap: new/delete
+// member functions
+// Stack vs Heap: Java vs C vs C++
+// constness
+// type/variable, typedef, struct
+// compile-time/run-time
+
 #include "stdio.h"
 #include "string.h"
 
@@ -17,24 +26,23 @@ void printAgeInData(Data& data)
 
 void printTitle()
 {
-    int k = 0;
+    printf("This is our first CS321 program :)\n");
+
     Data d;
     d.age = 41;
     strcpy(d.name, "HELLO");
+
     printAgeInData(d);
 
     printf("3) %d\n", d.age);
 
-    printf("This is our first CS321 program :)\n");
     printf("[%s]\n", d.name);
 }
-
 
 int main(int argc, char* argv[])
 {
     printTitle();
     printf("Number of arguments passed: %d\n", argc);
     for(int i=0; i<argc; ++i)
-        printf("'%lx'\n", argv[i]);
-
+        printf("'%s'\n", argv[i]);
 }
