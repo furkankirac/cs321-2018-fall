@@ -8,6 +8,7 @@
 // compile-time/run-time
 
 #include "stdio.h"
+#include "stdlib.h"
 #include "string.h"
 
 struct Data
@@ -17,36 +18,40 @@ struct Data
 };
 
 
-void printAgeInData(Data& data)
+void printAgeInData(Data* data)
 {
-    printf("1) %d\n", data.age);
-    data.age = 50;
-    printf("2) %d\n", data.age);
+    printf("1) %d\n", data->age);
+    data->age = 50;
+    printf("2) %d\n", data->age);
 }
 
 void printTitle()
 {
     printf("This is our first CS321 program :)\n");
 
-    Data d;
-    d.age = 41;
-    strcpy(d.name, "HELLO");
+    Data* d = (Data*)malloc(sizeof(Data));
+    d->age = 41;
+    strcpy(d->name, "HELLO");
 
     printAgeInData(d);
 
-    printf("3) %d\n", d.age);
+    printf("3) %d\n", d->age);
 
-    printf("[%s]\n", d.name);
+    printf("[%s]\n", d->name);
+
+    free(d);
 }
 
-char letters[10] = {'C', 'S', '3', '2', '1'};
+char letters[5] = {'C', 'S', '3', '2', '1'};
 
 int main(int argc, char* argv[])
 {
     printf("'%c'\n", *(letters+2));
     printf("'%c'\n", *(2+letters));
-    printf("'%c'\n", letters[2]);
-    printf("'%c'\n", 2[letters]);
+    printf("'%c'\n", letters[2]); // *(letters+2)
+    printf("'%c'\n", 2[letters]); // *(2+letters)
+
+    printf("%s", letters);
 
     printTitle();
     printf("Number of arguments passed: %d\n", argc);
