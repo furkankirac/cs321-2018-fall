@@ -8,7 +8,6 @@
 // compile-time/run-time
 
 #include "stdio.h"
-#include "stdlib.h"
 #include "string.h"
 
 struct Data
@@ -29,7 +28,7 @@ void printTitle()
 {
     printf("This is our first CS321 program :)\n");
 
-    Data* d = (Data*)malloc(sizeof(Data));
+    Data* d = new Data();
     d->age = 41;
     strcpy(d->name, "HELLO");
 
@@ -39,7 +38,7 @@ void printTitle()
 
     printf("[%s]\n", d->name);
 
-    free(d);
+    delete d;
 }
 
 char letters[5] = {'C', 'S', '3', '2', '1'};
