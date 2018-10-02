@@ -14,46 +14,36 @@ struct Data
 {
     char name[100];
     int age;
+
+    void printAge();
+    void printName();
 };
 
 
-void printAgeInData(Data* data)
+void Data::printAge()
 {
-    printf("1) %d\n", data->age);
-    data->age = 50;
-    printf("2) %d\n", data->age);
+    printf("Age: %d\n", this->age);
+}
+
+void Data::printName()
+{
+    printf("Name: %s\n", this->name);
 }
 
 void printTitle()
 {
     printf("This is our first CS321 program :)\n");
 
-    Data* d = new Data();
-    d->age = 41;
-    strcpy(d->name, "HELLO");
+    Data d;
+    d.age = 41;
+    strcpy(d.name, "HELLO");
 
-    printAgeInData(d);
-
-    printf("3) %d\n", d->age);
-
-    printf("[%s]\n", d->name);
-
-    delete d;
+    d.printName();
+    d.printAge();
 }
 
-char letters[5] = {'C', 'S', '3', '2', '1'};
 
 int main(int argc, char* argv[])
 {
-    printf("'%c'\n", *(letters+2));
-    printf("'%c'\n", *(2+letters));
-    printf("'%c'\n", letters[2]); // *(letters+2)
-    printf("'%c'\n", 2[letters]); // *(2+letters)
-
-    printf("%s", letters);
-
     printTitle();
-    printf("Number of arguments passed: %d\n", argc);
-    for(int i=0; i<argc; ++i)
-        printf("'%s'\n", argv[i]);
 }
