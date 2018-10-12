@@ -1,10 +1,11 @@
-// Pointer arithmetic, chars, []
-// heap: malloc/free
-// heap: new/delete
-// member functions
-// Stack vs Heap: Java vs C vs C++
-// constness
-// type/variable, typedef, struct
+// global functions, global variables (C)
+// namespaces
+// static member functions, static member variables (C++)
+// struct vs class
+// unsigned/signed
+// memory layout of classes
+// reflection in C
+// RAII (Resource Acquisition is Initialization), constructor, destructor (C++)
 // compile-time/run-time
 
 #include "stdio.h"
@@ -19,7 +20,6 @@ struct Data
     void printName() const;
 };
 
-
 void printAgeInData(const Data& d)
 {
     printf("Age: %d\n", d.age);
@@ -27,7 +27,6 @@ void printAgeInData(const Data& d)
 
 void Data::printAge() const
 {
-//    this->age = 20; // error because of const
     printf("Age: %d\n", this->age);
 }
 
@@ -36,9 +35,9 @@ void Data::printName() const
     printf("Name: %s\n", this->name);
 }
 
-void printTitle()
+int main(int argc, char* argv[])
 {
-    printf("This is our first CS321 program :)\n");
+    printf("Our CS321 program is evolving.\n");
 
     Data d;
     d.age = 41;
@@ -47,10 +46,4 @@ void printTitle()
     d.printName();
     d.printAge();
     printAgeInData(d);
-}
-
-
-int main(int argc, char* argv[])
-{
-    printTitle();
 }
