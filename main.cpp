@@ -10,11 +10,15 @@
 
 #include "stdio.h"
 #include "string.h"
+#include "stdint.h"
 
-struct Data
+class Data
 {
-    char name[100];
-    int age;
+public:
+    static int numData;
+
+    char name[97];
+    uint16_t age; // this can store between 0..65535
 
     void printAge() const;
     void printName() const;
@@ -38,6 +42,9 @@ void Data::printName() const
 int main(int argc, char* argv[])
 {
     printf("Our CS321 program is evolving.\n");
+    printf("Size of Data class is %ld bytes.\n", sizeof(Data));
+    printf("Alignment of Data is %ld bytes.\n", alignof(Data));
+    printf("Alignment of uint32_t is %ld bytes.\n", alignof(uint32_t));
 
     Data d;
     d.age = 41;
