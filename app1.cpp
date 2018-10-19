@@ -12,7 +12,7 @@
 #include "stdint.h"
 #include <string>
 
-typedef uint16_t Age; // C way of type aliasing
+//typedef uint16_t Age; // C way of type aliasing
 using Age = uint16_t; // C++ way of type aliasing
 
 class Data
