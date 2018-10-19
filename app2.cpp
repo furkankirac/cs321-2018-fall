@@ -18,12 +18,16 @@ public:
     Fraction(int num, int denum) : num(num), denum(denum) { }
 
     Fraction(const Fraction& other) = default;
-//    {
-//        num = other.num;
-//        denum = other.denum;
-//    }
 
     ~Fraction() = default;
+
+    Fraction add(const Fraction& other)
+    {
+        return Fraction(
+                    num*other.denum + other.num*denum,
+                    denum*other.denum
+                    );
+    }
 
     void print() const
     {
@@ -35,20 +39,23 @@ public:
 
 int main(int argc, char* argv[])
 {
-    Fraction f1;
+    Fraction f1(2, 3);
     Fraction f2(5);
 //    Fraction f2b = 10;
 
-    Fraction f2b(f2);
-//    Fraction f2b(Fraction(5));
+//    Fraction f2b(f2);
+    Fraction f2b(Fraction(5));
 
     Fraction f3(5, 2);
+
+    Fraction fadd = f1.add(f2);
+    fadd.print();
 
 //    Fraction f2c = 5;
 
 //    f1.print();
 //    f2.print();
-    f2b.print();
+//    f2b.print();
 //    f3.print();
 
     return 0;
