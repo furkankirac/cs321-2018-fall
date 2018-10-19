@@ -21,7 +21,14 @@ public:
 
     ~Fraction() = default;
 
-    Fraction add(const Fraction& other)
+    Fraction& operator =(const Fraction& other)
+    {
+        num = other.num;
+        denum = other.denum;
+        return *this;
+    }
+
+    Fraction operator +(const Fraction& other)
     {
         return Fraction(
                     num*other.denum + other.num*denum,
@@ -29,11 +36,23 @@ public:
                     );
     }
 
+    operator float()
+    {
+        return (float)num / denum;
+    }
+
     void print() const
     {
         std::cout << "num = " << num << "\n";
         std::cout << "denum = " << denum << "\n\n";
     }
+
+    void operator () (const char* title)
+    {
+        std::cout << title << "\n";
+        print();
+    }
+
 };
 
 
@@ -48,8 +67,12 @@ int main(int argc, char* argv[])
 
     Fraction f3(5, 2);
 
-    Fraction fadd = f1.add(f2);
+    f1 = Fraction(11, 3);
+    Fraction fadd = f1 + f2;
     fadd.print();
+    fadd("TITLE TITLE TITLE");
+
+    std::cout << "float value = " << (float)fadd << "\n";
 
 //    Fraction f2c = 5;
 
