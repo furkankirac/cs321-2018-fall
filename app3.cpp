@@ -5,26 +5,39 @@
 
 #include <iostream>
 
-using functype = void(*)(int&);
-
-void doIt(int& some_value)
+class WriteYourself
 {
-    std::cout << "doIt(" << some_value << ")\n";
-    ++some_value;
-}
+public:
+    int value = 0;
 
-void run10times(functype func_to_call)
-{
-    for(int i=0; i<10; ++i)
+    WriteYourself() = default;
+
+    WriteYourself(int value) : value(value)
     {
-        int j = i;
-        std::cout << "value of j (before) = " << j << "\n";
-        func_to_call(j);
-        std::cout << "value of j (after) = " << j << "\n";
     }
-}
+
+    WriteYourself(const WriteYourself& other) = default;
+
+    void operator() () const
+    {
+        std::cout << value << "\n";
+    }
+};
+
+class Do10Times
+{
+public:
+
+    void operator() (const WriteYourself& obj)
+    {
+        for(int i=0; i<10; ++i)
+            obj();
+    }
+
+};
 
 int main(int argc, char* argv[])
 {
-    run10times(&doIt);
+    Do10Times do_ten_times;
+    do_ten_times(WriteYourself(100));
 }
