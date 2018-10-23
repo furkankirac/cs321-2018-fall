@@ -5,25 +5,26 @@
 
 #include <iostream>
 
-using functype = float(*)(const int&);
+using functype = void(*)(int&);
 
-float doIt(const int& some_value)
+void doIt(int& some_value)
 {
     std::cout << "doIt(" << some_value << ")\n";
-    return some_value + 0.1f;
+    ++some_value;
 }
 
-void runner(functype func_to_call)
+void run10times(functype func_to_call)
 {
     for(int i=0; i<10; ++i)
     {
-        float retval = func_to_call(100);
-        std::cout << "returned value = " << retval << "\n";
+        int j = i;
+        std::cout << "value of j (before) = " << j << "\n";
+        func_to_call(j);
+        std::cout << "value of j (after) = " << j << "\n";
     }
 }
 
 int main(int argc, char* argv[])
 {
-//    functype a = &doIt;
-    runner(&doIt);
+    run10times(&doIt);
 }
