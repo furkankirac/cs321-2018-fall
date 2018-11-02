@@ -4,33 +4,44 @@
 
 #include <iostream>
 
+template<int value> // class template
 struct Accumulate
 {
-    int value;
-
-    Accumulate(int value = 0) : value(value) { }
+    void operator() ()
+    {
+        std::cout << value << std::endl;
+    }
 };
 
-Accumulate& operator <<(Accumulate& a, int v) // func #1
-{
-    std::cout << "BBBB";
-    a.value += v;
-    return a;
-}
 
-Accumulate& operator <<(Accumulate& a, const char*) // func #2
+// instead of below manual coding
+//auto getAccumulate_10_20() { return Accumulate<30>(); }
+//auto getAccumulate_100_1() { return Accumulate<101>(); }
+
+
+// do this instead
+template<int a, int b>
+auto getAccumulate() // function template
 {
-    std::cout << "AAAAAA";
-    ++a.value;
-    return a;
+    return Accumulate<a+b>();
 }
 
 
 int main(int argc, char* argv[])
 {
-    Accumulate a;
-    a << 10 << 20 << "hi guys"; // "....." this is const char*
+    const int v = 200;
 
-    std::cout << a.value << std::endl;
+    auto c = getAccumulate<10, 20>(); // getAccumulate_10_20();
+    auto d = getAccumulate<100, 1>();
+    auto e = getAccumulate<v, 1>();
+
+    c(); // 30
+    d(); // 101
+    e(); // 201
+
+//    std::cout << 30 << std::endl;
+//    std::cout << 101 << std::endl;
+//    std::cout << 201 << std::endl;
+
     return 0;
 }
