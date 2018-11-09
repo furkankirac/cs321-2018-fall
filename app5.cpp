@@ -5,21 +5,20 @@
 template<typename T>
 class ArrayList
 {
-    T values[10];
+    T values[10] = {0};
 
 public:
-    ArrayList()
-    {
-        for(int i=0; i<10; ++i)
-            values[i] = T();
-    }
-    inline T get(int index) { return values[index]; }
+//    ArrayList() = default;
+    inline T operator[](int index) const
+    { return values[index]; }
 
 };
 
-
 int main(int argc, char* argv[])
 {
+    int a = int();
+
     ArrayList<int> L;
-    return L.get(0);
+
+    return L[0];
 }
