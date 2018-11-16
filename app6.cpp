@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <vector>
+#include <array>
 
 struct OlderThan40
 {
@@ -27,7 +28,7 @@ struct OlderThanX
 
 
 template<typename T, typename FuncType>
-inline void forEach(const std::vector<T>& vec, const FuncType& func)
+inline void forEachPrint(const T& vec, const FuncType& func)
 {
     for(auto v : vec)
         if(func(v))
@@ -36,33 +37,32 @@ inline void forEach(const std::vector<T>& vec, const FuncType& func)
 
 int main(int argc, char* argv[])
 {
-    std::vector<int> person_ages = { 10, 20, 3, 42, 50 };
-
-    auto sz = person_ages.size();
-    std::cout << "Num of ints in vector: " << sz << std::endl;
+//    int person_ages[] = { 10, 20, 3, 42, 50 };
+    std::array<int, 5> person_ages = { 10, 20, 3, 42, 50 };
+//    std::vector<int> person_ages = { 10, 20, 3, 42, 50 };
 
     { // function object
 
         std::cout << "OlderThan40 function object\n";
-        forEach(person_ages, OlderThan40());
+        forEachPrint(person_ages, OlderThan40());
     }
 
     {
         std::cout << "OlderThan40 lambda\n";
         auto olderThan40 = [](auto age) -> bool { return age > 40; };
-        forEach(person_ages, olderThan40);
+        forEachPrint(person_ages, olderThan40);
     }
 
     {
         std::cout << "OlderThanX initialized with 40 (function object)\n";
         int x = 40;
-        forEach(person_ages, OlderThanX(x));
+        forEachPrint(person_ages, OlderThanX(x));
     }
 
     {
         std::cout << "OlderThanX initialized with 40 (lambda)\n";
         int x = 40;
-        forEach(person_ages, [=](auto age) { return age > x; });
+        forEachPrint(person_ages, [=](auto age) { return age > x; });
     }
 
     return 0;
