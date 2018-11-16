@@ -10,10 +10,26 @@
 #include <iostream>
 #include <vector>
 
-template<typename FuncType>
-void forEach(const std::vector<int>& vec, const FuncType& func)
+struct OlderThan40
 {
-    for(int v : vec)
+    template<typename T>
+    bool operator()(T age) const { return age > 40; }
+};
+
+struct OlderThanX
+{
+    int x;
+    OlderThanX(int x) : x(x) { }
+
+    template<typename T>
+    bool operator()(T age) const { return age > x; }
+};
+
+
+template<typename T, typename FuncType>
+inline void forEach(const std::vector<T>& vec, const FuncType& func)
+{
+    for(auto v : vec)
         if(func(v))
             std::cout << v << std::endl;
 }
@@ -26,60 +42,27 @@ int main(int argc, char* argv[])
     std::cout << "Num of ints in vector: " << sz << std::endl;
 
     { // function object
-        struct OlderThan40
-        {
-            bool operator()(int age) const { return age > 40; }
-        };
 
         std::cout << "OlderThan40 function object\n";
-        OlderThan40 olderThan40;
-        forEach(person_ages, olderThan40);
-//        for(int v : person_ages)
-//        {
-//            if(olderThan40(v))
-//                std::cout << v << std::endl;
-//        }
+        forEach(person_ages, OlderThan40());
     }
 
     {
         std::cout << "OlderThan40 lambda\n";
-        auto olderThan40 = [](int age) -> bool { return age > 40; };
+        auto olderThan40 = [](auto age) -> bool { return age > 40; };
         forEach(person_ages, olderThan40);
-//        for(int v : person_ages)
-//        {
-//            if(olderThan40(v))
-//                std::cout << v << std::endl;
-//        }
     }
 
     {
-        struct OlderThanX
-        {
-            int x;
-            OlderThanX(int x) : x(x) { }
-            bool operator()(int age) const { return age > x; }
-        };
         std::cout << "OlderThanX initialized with 40 (function object)\n";
         int x = 40;
-        OlderThanX olderThanX(x);
-        forEach(person_ages, olderThanX);
-//        for(int v : person_ages)
-//        {
-//            if(olderThanX(v))
-//                std::cout << v << std::endl;
-//        }
+        forEach(person_ages, OlderThanX(x));
     }
 
     {
         std::cout << "OlderThanX initialized with 40 (lambda)\n";
         int x = 40;
-        auto olderThanX = [=](int age) { return age > x; };
-        forEach(person_ages, olderThanX);
-//        for(int v : person_ages)
-//        {
-//            if(olderThanX(v))
-//                std::cout << v << std::endl;
-//        }
+        forEach(person_ages, [=](auto age) { return age > x; });
     }
 
     return 0;
