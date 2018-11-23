@@ -13,41 +13,11 @@
 
 #include <iostream>
 
-template<int n, int m>
-struct detail
-{
-    static inline int mult()
-    {
-        return detail<n, m-1>::mult() + n;
-    }
+template<int n, int m>  struct detail { static const int value = detail<n, m-1>::value + n; };
+template<int n>         struct detail<n, 1> { static const int value = n; };
+template<int n>         struct detail<n, 0> { static const int value = 0; };
 
-};
-
-template<int n>
-struct detail<n, 1>
-{
-    static inline int mult()
-    {
-        return n;
-    }
-
-};
-
-
-template<int n>
-struct detail<n, 0>
-{
-    static inline int mult()
-    {
-        return 0;
-    }
-};
-
-template<int n, int m>
-inline int mult()
-{
-    return detail<n, m>::mult();
-}
+template<int n, int m>  inline int mult() { return detail<n, m>::value; }
 
 int main(int argc, char* argv[])
 {
