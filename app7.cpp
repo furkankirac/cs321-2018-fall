@@ -14,27 +14,40 @@
 #include <iostream>
 
 template<int n, int m>
-int mult()
+struct X
 {
-    return mult<n, m-1>() + n;
-}
+    static inline int mult()
+    {
+        return X<n, m-1>::mult() + n;
+    }
+
+};
 
 template<int n>
-int mult<n, 1>()
+struct X<n, 1>
 {
-    return n;
-}
+    static inline int mult()
+    {
+        return n;
+    }
+
+};
+
 
 template<int n>
-int mult<n, 0>()
+struct X<n, 0>
 {
-    return 0;
-}
+    static inline int mult()
+    {
+        return 0;
+    }
+};
+
 
 int main(int argc, char* argv[])
 {
     using namespace std;
 
-    cout << mult<10, 5>() << endl;
+    cout << X<10, 5>::mult() << endl;
     return 0;
 }
