@@ -14,17 +14,17 @@
 #include <iostream>
 
 template<int n, int m>
-struct X
+struct detail
 {
     static inline int mult()
     {
-        return X<n, m-1>::mult() + n;
+        return detail<n, m-1>::mult() + n;
     }
 
 };
 
 template<int n>
-struct X<n, 1>
+struct detail<n, 1>
 {
     static inline int mult()
     {
@@ -35,7 +35,7 @@ struct X<n, 1>
 
 
 template<int n>
-struct X<n, 0>
+struct detail<n, 0>
 {
     static inline int mult()
     {
@@ -43,11 +43,16 @@ struct X<n, 0>
     }
 };
 
+template<int n, int m>
+inline int mult()
+{
+    return detail<n, m>::mult();
+}
 
 int main(int argc, char* argv[])
 {
     using namespace std;
 
-    cout << X<10, 5>::mult() << endl;
+    cout << mult<10, 5>() << endl;
     return 0;
 }
