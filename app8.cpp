@@ -11,9 +11,9 @@
 
 #include <iostream>
 #include <vector>
-//#include <list>
-//#include <algorithm>
-//#include <numeric>
+#include <list>
+#include <algorithm>
+#include <numeric>
 
 int main(int argc, char* argv[])
 {
@@ -25,16 +25,25 @@ int main(int argc, char* argv[])
         cout << endl;
     };
 
-    vector<int> v = { 1, 2, 3, 4, 5 };
-    vector<int> y(v.size());
+    vector<int> v(50);
+    iota(v.begin(), v.end(), 1);
+    list<int> y;
+    vector<int> z;
 
+    transform(v.begin(), v.end(), front_inserter(y), [](int value) {
+        return value*value;
+    });
 
-    auto it2 = y.begin();
-    for(auto it = v.begin(); it != v.end(); ++it)
-        *it2++ = (*it) * (*it);
+    copy_if(y.begin(), y.end(), back_inserter(z), [](int value) {
+        return value > 10;
+    });
+
+    auto sum_z = accumulate(z.begin(), z.end(), 0);
 
     print(v);
     print(y);
+    print(z);
+    cout << "sum_z = " << sum_z << endl;
 
     return 0;
 }
