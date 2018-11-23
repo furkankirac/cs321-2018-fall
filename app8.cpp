@@ -34,9 +34,10 @@ int main(int argc, char* argv[])
         return value*value;
     });
 
-    copy_if(y.begin(), y.end(), back_inserter(z), [](int value) {
-        return value > 10;
-    });
+    int k = 10;
+    copy_if(y.begin(), y.end(), back_inserter(z),
+            [&k](int value) { return value > k; }
+    );
 
     auto sum_z = accumulate(z.begin(), z.end(), 0);
 
