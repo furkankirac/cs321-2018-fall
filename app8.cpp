@@ -19,19 +19,20 @@ int main(int argc, char* argv[])
 {
     using namespace std;
 
+    auto print = [](const auto& container) {
+        for(auto val : container)
+            cout << val << ", ";
+        cout << endl;
+    };
+
     vector<int> v = { 1, 2, 3, 4, 5 };
     vector<int> y(v.size());
 
     for(int i=0; i<v.size(); ++i)
         y[i] = v.at(i) * v.at(i);
 
-    for(auto val : v)
-        cout << val << ", ";
-    cout << endl;
-
-    for(auto val : y)
-        cout << val << ", ";
-    cout << endl;
+    print(v);
+    print(y);
 
     return 0;
 }
