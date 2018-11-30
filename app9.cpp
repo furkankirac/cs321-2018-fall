@@ -121,5 +121,11 @@ int main(int argc, char* argv[])
 ////    int i = 2.0; // this will work
 ////    int i{2.0}; // this won't compile, which is good
 
+    unique_ptr<char> str(new char[1000000]);
+
+    unique_ptr<Point> mypoint(new Point(50, 20));
+    auto mypoint2 = make_unique<Point>(50, 20);
+
+
     return 0;
 }
