@@ -11,6 +11,7 @@ add_executable("app6" "app6.cpp")
 add_executable("app7" "app7.cpp")
 add_executable("app8" "app8.cpp")
 add_executable("app9" "app9.cpp")
+add_executable("app10" "app10.cpp")
 
 add_subdirectory("lab1")
 add_subdirectory("lab2")
