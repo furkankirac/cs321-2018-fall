@@ -1,5 +1,4 @@
 #include <iostream>
-#include <numeric>
 
 // pure functions are better. eliminate state if possible.
 // compile-time pure functions are represented by template meta programming in C++
@@ -18,7 +17,28 @@
 
 using namespace std;
 
+template<int u, int v>
+struct Divide
+{
+    static const auto value = u / v;
+};
+
+template<int k>
+struct Divide<k, 0>
+{
+    static const auto value = 0;
+};
+
+template<>
+struct Divide<0, 0>
+{
+    static const auto value = -1;
+};
+
+
 int main(int argc, char* argv[])
 {
+    cout << Divide<10, 0>::value << endl;
+    cout << Divide<0, 0>::value << endl;
     return 0;
 }
