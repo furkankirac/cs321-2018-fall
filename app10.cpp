@@ -21,16 +21,25 @@ template<int u, int v>  struct Divide       { static const auto value = u / v; }
 template<int k>         struct Divide<k, 0> { static const auto value = 0; };
 template<>              struct Divide<0, 0> { static const auto value = -1; };
 
-template<int first, int second>
-struct Sum
+template<int ...> struct Sum;
+
+
+template<int first, int ...rest>
+struct Sum<first, rest...>
 {
-    static const auto value = first + second;
+    static const auto value = first + Sum<rest...>::value;
+};
+
+template<>
+struct Sum<>
+{
+    static const auto value = 0;
 };
 
 int main(int argc, char* argv[])
 {
     cout << Divide<10, 0>::value << endl;
     cout << Divide<0, 0>::value << endl;
-    cout << Sum<10, 21>::value << endl;
+    cout << Sum<10, 20, 30, 1, 2, 3>::value << endl;
     return 0;
 }
