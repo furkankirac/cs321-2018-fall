@@ -24,14 +24,14 @@ using namespace std;
 template<typename F, typename G>
 auto compose_(F f, G g)
 {
-    return [=](auto x) {
-        return f(g(x));
+    return [=](auto ...x) {
+        return f(g(x...));
     };
 }
 
 auto compose = [](auto f, auto g) {
-    return [=](auto x) {
-        return f(g(x));
+    return [=](auto ...xs) {
+        return f(g(xs...));
     };
 };
 
@@ -45,13 +45,27 @@ bool isRoomTemperature(double celcius)
     return celcius >= 20.0 && celcius <= 25.0;
 }
 
+double bmi(double weight, double height)
+{
+    return weight / (height*height);
+}
+
+bool isOverweight(double bmi)
+{
+    return bmi >= 30.0;
+}
+
 
 int main(int argc, char* argv[])
 {
-    auto func = compose(isRoomTemperature, fahrenheitToCelsius);
-    bool isRoomTemp = func(70);
-
-    cout << isRoomTemp << endl;
+    {
+        auto func = compose(isRoomTemperature, fahrenheitToCelsius);
+        cout << func(70) << endl;
+    }
+    {
+        auto func = compose(isOverweight, bmi);
+        cout << func(75, 1.80) << endl;
+    }
 
     return 0;
 }
