@@ -2,6 +2,8 @@ project(CS321)
 
 SET(CMAKE_CXX_FLAGS "-std=c++17 -lc++")
 
+include_directories("range-v3/include")
+
 add_executable("app1" "app1.cpp")
 add_executable("app2" "app2.cpp")
 add_executable("app3" "app3.cpp")
@@ -12,6 +14,8 @@ add_executable("app7" "app7.cpp")
 add_executable("app8" "app8.cpp")
 add_executable("app9" "app9.cpp")
 add_executable("app10" "app10.cpp")
+add_executable("app11" "app11.cpp")
+add_executable("app12" "app12.cpp")
 
 add_subdirectory("lab1")
 add_subdirectory("lab2")
