@@ -57,43 +57,67 @@ using namespace std;
 
 #include <range/v3/all.hpp>
 
-template<typename F, typename G>
-auto operator |(F f, G g)
-{
-    return [=](auto ...x) {
-        return g(f(x...));
-    };
-}
+//template<typename F, typename G>
+//auto operator |(F f, G g)
+//{
+//    return [=](auto ...x) {
+//        return g(f(x...));
+//    };
+//}
 
-auto compose = [](auto ...funcs) {
-    return (funcs | ...);
+//auto compose = [](auto ...funcs) {
+//    return (funcs | ...);
+//};
+
+//auto fahrenheitToCelsius = [](double fahrenheit)
+//{ return (fahrenheit - 32) / 180.0 * 100.0; };
+
+//auto isRoomTemperature = [](double celcius)
+//{ return celcius >= 20.0 && celcius <= 25.0; };
+
+//auto negateIt = [](bool value)
+//{ return !value; };
+
+//auto bmi = [](double weight, double height)
+//{ return weight / (height*height); };
+
+//auto isOverweight = [](double bmi)
+//{ return bmi >= 30.0; };
+
+struct Stupid
+{
+    int x = 100;
+
+    auto operator()() { x+=10; return x; }
 };
 
-auto fahrenheitToCelsius = [](double fahrenheit)
-{ return (fahrenheit - 32) / 180.0 * 100.0; };
+//Stupid stupid;
+auto stupid = Stupid{};
 
-auto isRoomTemperature = [](double celcius)
-{ return celcius >= 20.0 && celcius <= 25.0; };
-
-auto negateIt = [](bool value)
-{ return !value; };
-
-auto bmi = [](double weight, double height)
-{ return weight / (height*height); };
-
-auto isOverweight = [](double bmi)
-{ return bmi >= 30.0; };
+auto stupid2 = [x=100]() mutable { return x+10; };
 
 int main(int argc, char* argv[])
 {
-    cout << (fahrenheitToCelsius | isRoomTemperature | negateIt)(70) << endl;
-    cout << compose(fahrenheitToCelsius, isRoomTemperature, negateIt)(70) << endl;
-    cout << (bmi | isOverweight)(75, 1.80) << endl;
+    auto generateIt = [k=1]() mutable { return (k*=2)/2; };
+//    for(int i=0; i<10; ++i)
+//        cout << generateIt() << endl;
 
-    auto v = std::vector<int>{10, 20, 35};
-    // lazily evaluated block
+    std::vector<unsigned char> v{1, 1, 0, 1, 0};
+    auto val = ranges::inner_product(
+                v | ranges::view::reverse,
+                ranges::view::generate([k=1]() mutable { return (k*=2)/2; }),
+                0
+                );
+    cout << val << endl;
+
+//    cout << (fahrenheitToCelsius | isRoomTemperature | negateIt)(70) << endl;
+//    cout << compose(fahrenheitToCelsius, isRoomTemperature, negateIt)(70) << endl;
+//    cout << (bmi | isOverweight)(75, 1.80) << endl;
+
+//    auto v = std::vector<int>{10, 20, 35};
+//    // lazily evaluated block
 //    auto rng = v
-//            | ranges::view::transform([](int value) { return value*value; })
+//            | ranges::view::transform([](int value) mutable { return value*value; })
 //            | ranges::view::reverse
 //            | ranges::view::take(2);
 
