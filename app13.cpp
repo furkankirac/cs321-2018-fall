@@ -58,36 +58,44 @@ using namespace std;
 #include <range/v3/all.hpp>
 
 template<typename F, typename G>
-auto compose_(F f, G g)
+auto operator |(F f, G g)
 {
     return [=](auto ...x) {
-        return f(g(x...));
+        return g(f(x...));
     };
 }
 
-auto compose = [](auto f, auto g) {
-    return [=](auto ...xs) {
-        return f(g(xs...));
-    };
+auto compose = [](auto ...funcs) {
+    return (funcs | ...);
 };
 
-double fahrenheitToCelsius(double fahrenheit) { return (fahrenheit - 32) / 180.0 * 100.0; }
-bool isRoomTemperature(double celcius) { return celcius >= 20.0 && celcius <= 25.0; }
+auto fahrenheitToCelsius = [](double fahrenheit)
+{ return (fahrenheit - 32) / 180.0 * 100.0; };
 
-double bmi(double weight, double height) { return weight / (height*height); }
-bool isOverweight(double bmi) { return bmi >= 30.0; }
+auto isRoomTemperature = [](double celcius)
+{ return celcius >= 20.0 && celcius <= 25.0; };
+
+auto negateIt = [](bool value)
+{ return !value; };
+
+auto bmi = [](double weight, double height)
+{ return weight / (height*height); };
+
+auto isOverweight = [](double bmi)
+{ return bmi >= 30.0; };
 
 int main(int argc, char* argv[])
 {
-    cout << compose(isRoomTemperature, fahrenheitToCelsius)(70) << endl;
-    cout << compose(isOverweight, bmi)(75, 1.80) << endl;
+    cout << (fahrenheitToCelsius | isRoomTemperature | negateIt)(70) << endl;
+    cout << compose(fahrenheitToCelsius, isRoomTemperature, negateIt)(70) << endl;
+    cout << (bmi | isOverweight)(75, 1.80) << endl;
 
     auto v = std::vector<int>{10, 20, 35};
     // lazily evaluated block
-    auto rng = v
-            | ranges::view::transform([](int value) { return value*value; })
-            | ranges::view::reverse
-            | ranges::view::take(2);
+//    auto rng = v
+//            | ranges::view::transform([](int value) { return value*value; })
+//            | ranges::view::reverse
+//            | ranges::view::take(2);
 
     return 0;
 }
